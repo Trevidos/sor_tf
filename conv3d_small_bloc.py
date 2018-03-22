@@ -10,7 +10,7 @@ import math
 
 
 size = [175, 152, 152]
-path = "Data/"
+path = "data/"
 
 images = []
 sor = []
@@ -19,17 +19,17 @@ batch_size = 20
 
 outputs = []
 for i in range(0,400):
-    io = ImageIO(path+"Input_"+str(i)+".raw")
+    io = ImageIO(path+"input_"+str(i)+".raw")
     img = io.read(size[0], size[1], size[2])
     images.append(img.get_whole_array())
 
 for i in range(0,400):
-    io = ImageIO(path+"Output_"+str(i)+".raw")
+    io = ImageIO(path+"output_"+str(i)+".raw")
     img = io.read(size[0], size[1], size[2])
     outputs.append(img.get_whole_array())
 
 
-with open("outputs/sor.csv", 'r') as csvfile:
+with open("outputs/sor.csv", 'rU') as csvfile:
         reader = csv.reader(csvfile, delimiter=';');
         count = 0
         for row in reader:
@@ -81,7 +81,7 @@ def pool(value, name='pool'):
         for i in range(len(sh[1:-1])):
             out = tf.reshape(out, (-1, 2, np.prod(sh[i + 2:])))
             out = out[:, 0, :]
-        out_size = [-1] + [math.ceil(s / 2) for s in sh[1:-1]] + [sh[-1]]
+        out_size = [-1] + [int(math.ceil(s / 2)) for s in sh[1:-1]] + [sh[-1]]
         out = tf.reshape(out, out_size, name=scope)
     return out
 
