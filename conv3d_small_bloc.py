@@ -208,8 +208,8 @@ with tf.Session(config=config) as session:
             adam, loss, yp,y, acc = session.run([adam_optimizer,loss_fonction, yprev, Y,accuracy],
                                    feed_dict={X:data , Y: result, training: True})
 
-            file = open("compute.log", 'aw')
-            log = "Train= "+str(train)+" Percent = "+str(a)+ " Loss = "+ str(loss)+ " Accuracy = "+ str(acc)+ " Size of the Oil cluster = "+ str(session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))))+ " on ="+ str(session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32)))+"\n")
+            file = open("compute.log", 'a')
+            log = "Train= "+str(train)+" Percent = "+str(a)+ " Loss = "+ str(loss)+ " Accuracy = "+ str(acc)+ " Size of the Oil cluster = "+ str(session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))))+ " on ="+ str(session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))))+"\n"
 
             file.writelines(log)
             file.close()
