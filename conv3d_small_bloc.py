@@ -164,11 +164,12 @@ config.gpu_options.allow_growth = True
 with tf.Session(config=config) as session:
     session.run(tf.global_variables_initializer())
 
-    #file_writer = tf.summary.FileWriter('./logs/', session.graph)
+    file_writer = tf.summary.FileWriter('./logs/', session.graph)
 
     if (load == 1):
         saver.restore(session, tf.train.latest_checkpoint("models/"))
         load = 0
+    tf.get_default_graph().finalize()
 
     for train in range(10000) :
 
@@ -209,7 +210,7 @@ with tf.Session(config=config) as session:
                                    feed_dict={X:data , Y: result, training: True})
 
             file = open("compute.log", 'a')
-            log = "Train= "+str(train)+" Percent = "+str(a)+ " Loss = "+ str(loss)+ " Accuracy = "+ str(acc)+ " Size of the Oil cluster = "+ str(session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))))+ " on ="+ str(session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))))+"\n"
+            log = "Train= "+str(train)+" Percent = "+str(a)+ " Loss = "+ str(loss) #+ " Accuracy = "+ str(acc)+ " Size of the Oil cluster = "+ str(session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))))+ " on ="+ str(session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))))+"\n"
 
             file.writelines(log)
             file.close()
