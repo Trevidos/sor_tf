@@ -154,7 +154,7 @@ accuracy = tf.reduce_sum(tf.cast(correct_prediction, 'float'))/tf.reduce_sum(tf.
 # Add ops to save and restore all the variables.
 saver = tf.train.Saver()
 
-load = 1
+load = 0
 
 
 config = tf.ConfigProto()
