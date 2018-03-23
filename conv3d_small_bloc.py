@@ -167,7 +167,7 @@ with tf.Session(config=config) as session:
     #file_writer = tf.summary.FileWriter('./logs/', session.graph)
 
     if (load == 1):
-        saver.restore(session, "models/conv_small.ckpt")
+        saver.restore(session, tf.train.latest_checkpoint("models/"))
         load = 0
 
     for train in range(10000) :
