@@ -208,9 +208,14 @@ with tf.Session(config=config) as session:
             adam, loss, yp,y, acc = session.run([adam_optimizer,loss_fonction, yprev, Y,accuracy],
                                    feed_dict={X:data , Y: result, training: True})
 
+            file = open("compute.log", 'w')
+            log = "Train= "+str(train)+" Percent = "+str(a)+ " Loss = "+ str(loss)+ " Accuracy = "+ str(acc)+ " Size of the Oil cluster = "+ str(session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))))+ " on ="+ str(session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))))
 
-            print("Percent = ",a, "Loss = ", loss, " Accuracy = ", acc, "Size of the Oil cluster = ", session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))), " on =",
-                              session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))));
+            file.writelines(log)
+            file.close()
+            #print("Percent = ",a, "Loss = ", loss, " Accuracy = ", acc, "Size of the Oil cluster = ", session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))), " on =",
+            #                  session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))))
+            print(log)
             # Save the variables to disk.
             save_path = saver.save(session, "models/conv_small.ckpt", global_step=train*100+a)
 
