@@ -180,7 +180,7 @@ with tf.Session(config=config) as session:
         img = images[rand]
         out = outputs[rand]
 
-        for a in range(500):
+        for a in range(100):
             for r in range(batch_size):
 
                 imin = np.random.randint(175-ksize)
@@ -208,9 +208,10 @@ with tf.Session(config=config) as session:
             adam, loss, yp,y, acc = session.run([adam_optimizer,loss_fonction, yprev, Y,accuracy],
                                    feed_dict={X:data , Y: result, training: True})
 
-            if a%5==0:
-                print("Percent = ",a/5, "Loss = ", loss, " Accuracy = ", acc, "Size of the Oil cluster = ", session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))), " on =",
-                              session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))));
 
-        # Save the variables to disk.
-        save_path = saver.save(session, "models/conv_small.ckpt")
+            print("Percent = ",a, "Loss = ", loss, " Accuracy = ", acc, "Size of the Oil cluster = ", session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))), " on =",
+                              session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))));
+            # Save the variables to disk.
+            save_path = saver.save(session, "models/conv_small.ckpt", global_step=train*100+a)
+
+
