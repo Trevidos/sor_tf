@@ -146,7 +146,7 @@ yprev = cnn_model(X)
 loss_fonction = tf.losses.mean_squared_error(Y, yprev)
 adam_optimizer = tf.train.AdamOptimizer().minimize(loss_fonction)
 
-correct_prediction = tf.logical_and(tf.greater(yprev, 0.67), tf.equal(Y, 1.0))
+correct_prediction = tf.logical_and(tf.greater(yprev, 0.5), tf.equal(Y, 1.0))
 accuracy = tf.reduce_sum(tf.cast(correct_prediction, 'float'))/tf.reduce_sum(tf.cast(tf.equal(Y, 1.0), 'float'))
 
 
@@ -154,7 +154,7 @@ accuracy = tf.reduce_sum(tf.cast(correct_prediction, 'float'))/tf.reduce_sum(tf.
 # Add ops to save and restore all the variables.
 saver = tf.train.Saver()
 
-load = 1
+load = 0
 
 
 config = tf.ConfigProto()
@@ -193,10 +193,10 @@ with tf.Session(config=config) as session:
                             data[r, i, j, k, 0] = img[imin+i,jmin+j,k+kmin]
                             value = out[imin + i, jmin + j, k + kmin]
 
-                            if(value ==4):
-                                value = 3
+                            # if(value ==4):
+                            #     value = 10
 
-                            result[r, i, j, k, 0] = value / 3.
+                            result[r, i, j, k, 0] = value / 4.
                             #     result[r,i,j,k,0] = 0
                             #     result[r, i, j, k, 1] = 1
                             # else :
@@ -209,7 +209,7 @@ with tf.Session(config=config) as session:
                                    feed_dict={X:data , Y: result, training: True})
 
             if a%5==0:
-                print("Percent = ",a/5, "Loss = ", loss, " Accuracy = ", acc, "Size of the Oil cluster = ", session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.666), tf.float32))), " on =",
+                print("Percent = ",a/5, "Loss = ", loss, " Accuracy = ", acc, "Size of the Oil cluster = ", session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))), " on =",
                               session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))));
 
         # Save the variables to disk.

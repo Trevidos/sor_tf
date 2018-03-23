@@ -4,7 +4,7 @@ import argparse
 import sys
 
 parser = argparse.ArgumentParser()
-parser.add_argument('file', default='Data/input_407.raw')
+parser.add_argument('file', default='data/output_47.raw')
 parser.add_argument('--size', nargs=3, type=int, default=[175, 152, 152])
 parser.add_argument('--index', type=int,  default=81)
 
