@@ -78,7 +78,7 @@ batch_size = 1
 # Add ops to save and restore all the variables.
 saver = tf.train.Saver()
 
-load = 0
+load = 1
 
 with tf.Session() as session:
     session.run(tf.global_variables_initializer())
