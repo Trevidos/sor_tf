@@ -101,22 +101,22 @@ with tf.Session() as session:
             if i % 5 == 0:
                 file = open("compute.log", 'a')
                 log = "Train= " + str(train) + " Percent = " + str(i) + " Loss = " + str(
-                    loss)+"\n"  # + " Accuracy = "+ str(acc)+ " Size of the Oil cluster = "+ str(session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))))+ " on ="+ str(session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))))+"\n"
+                    loss)+"\n"
 
                 file.writelines(log)
                 file.close()
                 print("Percent = ", i, " Loss = ", loss);
 
-            # Testing
-            rand = np.random.randint(80)
-            data = np.reshape(images[320+rand], [1, 175, 152, 152, 1])
-            result = np.reshape(outputs[320+rand], [1, 175, 152, 152, 1])/4
-            loss, y = session.run([loss_fonction, yprev],
-                        feed_dict={X: data, Y: result, training: False})
+        # Testing
+        rand = np.random.randint(80)
+        data = np.reshape(images[320+rand], [1, 175, 152, 152, 1])
+        result = np.reshape(outputs[320+rand], [1, 175, 152, 152, 1])/4
+        loss, y = session.run([loss_fonction, yprev],
+                      feed_dict={X: data, Y: result, training: False})
 
-            file = open("compute.log", 'a')
-            log = "Test Data= " + str(rand) + " Loss = " + str(
-                loss)+"\n"  # + " Accuracy = "+ str(acc)+ " Size of the Oil cluster = "+ str(session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))))+ " on ="+ str(session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))))+"\n"
+        file = open("compute.log", 'a')
+        log = "Test Data= " + str(rand) + " Loss = " + str(
+               loss)+"\n"
 
-            file.writelines(log)
-            file.close()
+        file.writelines(log)
+        file.close()
