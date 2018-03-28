@@ -48,21 +48,24 @@ training = tf.placeholder(tf.bool)
 
 def cnn_model(x_train_data, keep_rate=0.7, seed=None):
     with tf.name_scope("layer_a"):
-        conv1 = tf.layers.conv3d(inputs=x_train_data, filters=8, kernel_size=[12, 12, 12], padding='same',
+        conv1 = tf.layers.conv3d(inputs=x_train_data, filters=24, kernel_size=[12, 12, 12], padding='same',
                                  activation=tf.nn.relu)
         conv1_ = tf.layers.max_pooling3d(conv1, 4,1,padding='SAME')
-        conv2 = tf.layers.conv3d(inputs=conv1_,  filters=16, kernel_size=[7, 7, 7], padding='same', activation=tf.nn.relu)
+        conv2 = tf.layers.conv3d(inputs=conv1_,  filters=32, kernel_size=[7, 7, 7], padding='same', activation=tf.nn.relu)
         conv2_ = tf.layers.max_pooling3d(conv2, 2, 1, padding='SAME')
-        conv3 = tf.layers.conv3d(inputs=conv2_, filters=16, kernel_size=[5, 5, 5], padding='same', activation=tf.nn.relu)
+
+    with tf.device('/cpu:0'):
+        conv3 = tf.layers.conv3d(inputs=conv2_, filters=64, kernel_size=[5, 5, 5], padding='same', activation=tf.nn.relu)
         conv3_ = tf.layers.max_pooling3d(conv3, 2, 1, padding='SAME')
 
-    with tf.name_scope("fully_con"):
-        dense = tf.layers.dense(inputs=conv3_, units=32, activation=tf.nn.relu)
-         # (1-keep_rate) is the probability that the node will be kept
-        dropout = tf.layers.dropout(inputs=dense, rate=1-keep_rate, training=training)
 
-    with tf.name_scope("y_conv"):
-         y_conv = tf.layers.dense(dropout, 1, activation=None)
+        with tf.name_scope("fully_con"):
+            dense = tf.layers.dense(inputs=conv3_, units=1024, activation=tf.nn.relu)
+         # (1-keep_rate) is the probability that the node will be kept
+            dropout = tf.layers.dropout(inputs=dense, rate=1-keep_rate, training=training)
+
+        with tf.name_scope("y_conv"):
+             y_conv = tf.layers.dense(dropout, 1, activation=None)
 
     return y_conv
 
