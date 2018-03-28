@@ -114,4 +114,9 @@ with tf.Session() as session:
             loss, y = session.run([loss_fonction, yprev],
                         feed_dict={X: data, Y: result, training: False})
 
-            print("On Testing Data(",rand,"): ", loss)
+            file = open("compute.log", 'a')
+            log = "Test Data= " + str(rand) + " Loss = " + str(
+                loss)  # + " Accuracy = "+ str(acc)+ " Size of the Oil cluster = "+ str(session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))))+ " on ="+ str(session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))))+"\n"
+
+            file.writelines(log)
+            file.close()
