@@ -101,7 +101,7 @@ with tf.Session() as session:
             if i % 5 == 0:
                 file = open("compute.log", 'a')
                 log = "Train= " + str(train) + " Percent = " + str(i) + " Loss = " + str(
-                    loss)  # + " Accuracy = "+ str(acc)+ " Size of the Oil cluster = "+ str(session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))))+ " on ="+ str(session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))))+"\n"
+                    loss)+"\n"  # + " Accuracy = "+ str(acc)+ " Size of the Oil cluster = "+ str(session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))))+ " on ="+ str(session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))))+"\n"
 
                 file.writelines(log)
                 file.close()
@@ -116,7 +116,7 @@ with tf.Session() as session:
 
             file = open("compute.log", 'a')
             log = "Test Data= " + str(rand) + " Loss = " + str(
-                loss)  # + " Accuracy = "+ str(acc)+ " Size of the Oil cluster = "+ str(session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))))+ " on ="+ str(session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))))+"\n"
+                loss)+"\n"  # + " Accuracy = "+ str(acc)+ " Size of the Oil cluster = "+ str(session.run(tf.reduce_sum(tf.cast(tf.greater(yp, 0.5), tf.float32))))+ " on ="+ str(session.run(tf.reduce_sum(tf.cast(tf.equal(y, 1.0), tf.float32))))+"\n"
 
             file.writelines(log)
             file.close()
