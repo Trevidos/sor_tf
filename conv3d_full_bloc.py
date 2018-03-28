@@ -57,7 +57,7 @@ def cnn_model(x_train_data, keep_rate=0.7, seed=None):
         conv3_ = tf.layers.max_pooling3d(conv3, 2, 1, padding='SAME')
 
     with tf.name_scope("fully_con"):
-        dense = tf.layers.dense(inputs=conv3_, units=128, activation=tf.nn.relu)
+        dense = tf.layers.dense(inputs=conv3_, units=32, activation=tf.nn.relu)
          # (1-keep_rate) is the probability that the node will be kept
         dropout = tf.layers.dropout(inputs=dense, rate=1-keep_rate, training=training)
 
