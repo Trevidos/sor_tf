@@ -10,14 +10,14 @@ sess = tf.Session()
 print(sess.run(hello))
 
 size = [175, 152, 152]
-path = "Data/"
+path = "data/"
 
 images = []
 sor = []
 outputs = []
 
 for i in range(0,400):
-    io = ImageIO(path+"Input_"+str(i)+".raw")
+    io = ImageIO(path+"input_"+str(i)+".raw")
     img = io.read(size[0], size[1], size[2])
     images.append(img.get_whole_array())
 
