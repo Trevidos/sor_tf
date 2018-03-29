@@ -59,8 +59,8 @@ def cnn_model(x_train_data, keep_rate=0.7, seed=None):
         conv2 = tf.layers.conv3d(inputs=conv1_,  filters=128, kernel_size=[7, 7, 7], padding='same', activation=tf.nn.relu)
         conv2_ = tf.layers.max_pooling3d(conv2, 2, 2, padding='SAME')
 
-        conv3 = tf.layers.conv3d(inputs=conv2_, filters=2048, kernel_size=[5, 5, 5], padding='same', activation=tf.nn.relu)
         with tf.device('/cpu:0'):
+            conv3 = tf.layers.conv3d(inputs=conv2_, filters=2048, kernel_size=[5, 5, 5], padding='same', activation=tf.nn.relu)
             conv3_ = tf.layers.max_pooling3d(conv3, 2, 1, padding='SAME')
 
             with tf.name_scope("fully_con"):
